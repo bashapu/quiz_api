@@ -30,7 +30,6 @@ class _QuizScreenState extends State<QuizScreen> {
       });
     } catch (e) {
       print(e);
-      // Handle error appropriately
     }
   }
 
@@ -61,7 +60,7 @@ class _QuizScreenState extends State<QuizScreen> {
     return ElevatedButton(
       onPressed: _answered ? null : () => _submitAnswer(option),
       child: Text(option),
-      style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+      style: ElevatedButton.styleFrom(foregroundColor: Colors.blue),
     );
   }
 
@@ -73,9 +72,23 @@ class _QuizScreenState extends State<QuizScreen> {
     if (_currentQuestionIndex >= _questions.length) {
       return Scaffold(
         body: Center(
-          child: Text(
-            'Quiz Finished! Your Score: $_score/${_questions.length}',
-          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Quiz Finished! Your Score: $_score/${_questions.length}'),
+              SizedBox(height: 16),
+              ElevatedButton(
+                onPressed:
+                    () => {
+                      setState(() {
+                        _currentQuestionIndex = 0;
+                        _score = 0;
+                      }),
+                    },
+                child: Text('Start Again'),
+              ),
+            ],
+          )
         ),
       );
     }
